@@ -1,5 +1,5 @@
 # nm
-narodmon.ru
+narodmon
 
 Get data from sensors attached to arduino nano, put data to /tmp/sens_data,
 add to sqlite3 /db/msensors.db and send to narodmon.ru.
