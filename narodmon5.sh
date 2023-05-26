@@ -7,15 +7,15 @@
 
 log="/var/log/narodmon5.log"
 dtfmt="+%Y-%m-%d %H:%M:%S"
-datafile=/tmp/sens_data
+datfile="/tmp/sens_data"
 
-if [ ! -e $datfile ]
+if [ ! -e "$datfile" ]
 then
-    echo "$(date $dtfmt) Sensors data file $datafile not found!" >> $log
+    echo "$(date $dtfmt) Sensors data file $datfile not found!" >> $log
     exit 1
 fi
 
-sdt=`stat --format=%y $datafile | cut -c1-19`
+sdt=`stat --format=%y $datfile | cut -c1-19`
 
 # -------------------------
 
