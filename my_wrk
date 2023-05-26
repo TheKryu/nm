@@ -2,6 +2,8 @@ SHELL=/bin/sh
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/lib/news/bin:/usr/local/bin
 MAILTO=""
 
+# get data from sensors every 5 minutes
 */5 * * * * root /work/c/readsens /dev/ttyUSB0 7 2 q > /tmp/sens_data; /usr/local/bin/sens2db.sh; /usr/local/bin/narodmon5.sh
+# clear db
 2 0 * * * root /usr/local/bin/clear_db.sh
 2 0 * * * root tar cvfz /work/all/backup/db.tar.gz /db/msensors.db
