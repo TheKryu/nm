@@ -45,7 +45,7 @@ sdt=`stat --format=%y $datfile | cut -c1-19`
 cl=`/usr/bin/find $datfile -cmin +10 | wc -l`
 if [ $cl -ne 0 ]
 then
-    wlog "Sensors data file $datafile was last updated at $sdt > 10 min!!!" 
+    wlog "Sensors data file $datfile was last updated at $sdt > 10 min!!!" 
 #    exit 1
 fi
 
