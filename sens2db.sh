@@ -12,10 +12,8 @@
 
 log="/var/log/sens2db.log"
 dtfmt="+%Y-%m-%d %H:%M:%S"
-datafile=/tmp/sens_data
-#datafile=/tmp/sensors.dat
+datfile="/tmp/sens_data"
 db=/db/msensors.db
-#db=/db/ms_test.db
 
 #
 # write to log file
@@ -30,7 +28,7 @@ wlog()
 
 if [ ! -e $datfile ]
 then
-    wlog "Sensors data file $datafile not found!"
+    wlog "Sensors data file $datfile not found!"
     exit 1
 fi
 
@@ -42,9 +40,9 @@ fi
 
 # check for file time less then 10 min.
 
-sdt=`stat --format=%y $datafile | cut -c1-19`
+sdt=`stat --format=%y $datfile | cut -c1-19`
 
-cl=`/usr/bin/find $datafile -cmin +10 | wc -l`
+cl=`/usr/bin/find $datfile -cmin +10 | wc -l`
 if [ $cl -ne 0 ]
 then
     wlog "Sensors data file $datafile was last updated at $sdt > 10 min!!!" 
@@ -55,52 +53,36 @@ echo $sdt
 
 # -------------------------
 
-sd=`cat "$datafile"`
+sd=`cat "$datfile"`
 
 # 1 sht21 temp
-sens1=`/bin/cat $datafile | /usr/bin/cut -d';' -f 2`
+sens1=`/bin/cat $datfile | /usr/bin/cut -d';' -f 2`
 
 # 2 sht21 humidity
-sens2=`/bin/cat $datafile | /usr/bin/cut -d';' -f 3`
+sens2=`/bin/cat $datfile | /usr/bin/cut -d';' -f 3`
 
 # 3 bmp180 press
-sens3=`/bin/cat $datafile | /usr/bin/cut -d';' -f 4`
+sens3=`/bin/cat $datfile | /usr/bin/cut -d';' -f 4`
 
 # 4 bmp180 temp
-sens4=`/bin/cat $datafile | /usr/bin/cut -d';' -f 5`
+sens4=`/bin/cat $datfile | /usr/bin/cut -d';' -f 5`
 
 # 5 ds18b20 temp
-sens5=`/bin/cat $datafile | /usr/bin/cut -d';' -f 6`
+sens5=`/bin/cat $datfile | /usr/bin/cut -d';' -f 6`
 
 # 6 out dht21 temp
-sens6=`/bin/cat $datafile | /usr/bin/cut -d';' -f 7`
+sens6=`/bin/cat $datfile | /usr/bin/cut -d';' -f 7`
 
 # 7 out dht21 humidity
-sens7=`/bin/cat $datafile | /usr/bin/cut -d';' -f 8`
+sens7=`/bin/cat $datfile | /usr/bin/cut -d';' -f 8`
 
 # 8 in dht21 temp
-sens8=`/bin/cat $datafile | /usr/bin/cut -d';' -f 9`
+sens8=`/bin/cat $datfile | /usr/bin/cut -d';' -f 9`
 
 # 9 in dht21 humidity
-sens9=`/bin/cat $datafile | /usr/bin/cut -d';' -f 10`
+sens9=`/bin/cat $datfile | /usr/bin/cut -d';' -f 10`
 
-wlog "$datafile[$sdt]-->$sd"
-
-####
-
-#wlog "$db"
-
-# check for date is already in db
-
-#dtid=`echo "select id from dates where date='$sdt';" | sqlite3 -noheader $db`
-#echo "$dtid"
-
-#if [ ! -z "$dtid" ]
-#then
-#  wlog "Date=$sdt already in db (dates.id=$dtid)!"
-#  exit 1
-#fi
-
+wlog "$datfile[$sdt]-->$sd"
 
 # check for date is already in db
 
